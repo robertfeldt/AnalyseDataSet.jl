@@ -60,7 +60,6 @@ end
 """
 function analyse(df::DataFrame)
     colanalyses = AbstractVariateAnalysis[analysecolumn(df, c) for c in 1:ncol(df)]
-    @info string(length(colanalyses))
     summarize_analyses(df, colanalyses)
 end
 
