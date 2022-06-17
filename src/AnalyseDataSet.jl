@@ -81,7 +81,7 @@ function analysecolumn(df::DataFrame, c::Union{Int, String, Symbol})
         else
             return VarAnalysis(sometimesmissing, desc, nonemissinguvals)
         end
-    elseif all(t -> t <: AbstractString, types)
+    elseif all(t -> t <: Union{AbstractString,Symbol}, types)
         # Possibly likert scale?
         desc = if 3 <= length(nonemissinguvals) <= 7 && islikert(nonemissinguvals)
             "Categorical($(length(nonemissinguvals)), likert)"
@@ -114,5 +114,7 @@ function islikert(nonmissingtype::AbstractVector{<:AbstractString})
       hassameelements(uvals, ["rather true", "exactly true", "hardly true", "not true"]) ||
       hassameelements(uvals, ["some of the time", "a little of the time", "none of the time", "most of the time", "all of the time"])
 end
+
+islikert(nonmissingtype::AbstractVector) = false
 
 end
